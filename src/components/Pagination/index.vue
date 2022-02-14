@@ -1,17 +1,15 @@
 <template>
   <div class="pagination">
-    <button @click="lastPage">上一页</button>
-    <button :class="{select:pageNo===1}" v-if="pageNo>=4" @click="selectNo">1</button>
-    <button v-if="pageNo>4">···</button>
-    <button :class="{select:pageNo===pageNumber-2}" v-if="totalPage>=1" @click="selectNo">{{pageNumber-2}}</button>
-    <button :class="{select:pageNo===pageNumber-1}" v-if="totalPage>=2" @click="selectNo">{{pageNumber-1}}</button>
-    <button :class="{select:pageNo===pageNumber}" v-if="totalPage>=3" @click="selectNo">{{pageNumber}}</button>
-    <button :class="{select:pageNo===pageNumber+1}" v-if="totalPage>=4" @click="selectNo">{{pageNumber+1}}</button>
-    <button :class="{select:pageNo===pageNumber+2}" v-if="totalPage>=5" @click="selectNo">{{pageNumber+2}}</button>
+    <button :disabled="pageNo==1" @click="$emit('getSelectNo',pageNo-1)">上一页</button>
+    <button :class="{active:pageNo==1}" v-if="startNumAndEndNum.start > 1" @click="$emit('getSelectNo',1)">1</button>
+    <button v-if="startNumAndEndNum.start > 2">···</button>
+
+    <!-- 中间部分 -->
+    <button :class="{active:pageNo==page}" v-for="(page,index) in startNumAndEndNum.end" :key="index" v-if="page>=startNumAndEndNum.start" @click="$emit('getSelectNo',page)">{{page}}</button>
     
-    <button v-if="pageNo<totalPage-3">···</button>
-    <button :class="{select:pageNo===totalPage}" v-if="pageNo<=totalPage-3" @click="selectNo">{{totalPage}}</button>
-    <button @click="nextPage">下一页</button>
+    <button v-if="startNumAndEndNum.end < totalPage-1">···</button>
+    <button :class="{active:pageNo==totalPage}" v-if="startNumAndEndNum.end < totalPage" @click="$emit('getSelectNo',totalPage)">{{totalPage}}</button>
+    <button :disabled="pageNo==totalPage" @click="$emit('getSelectNo',pageNo+1)">下一页</button>
     
     <button style="margin-left: 30px">共 {{total}} 条</button>
   </div>
@@ -22,36 +20,38 @@
     name: "Pagination",
     props:['pageNo','pageSize','total','continues'],
     computed: {
-      //总页数
       totalPage(){
         //向上取整
         return Math.ceil(this.total/this.pageSize)
       },
-      pageNumber(){
-        // if(this.pageNo>=4&&this.pageNo<=this.totalPage-3){
-        //   return this.pageNo
-        // }else if(this.pageNo<4){
-        //   return 3
-        // }else{
-        //   return this.totalPage-2
-        // }
-        return this.pageNo>=4&&this.pageNo<=this.totalPage-3?this.pageNo:this.pageNo<4?3:this.totalPage-2
-      }
-    },
-    methods: {
-      //点击页码，将页码传递给父组件进行请求
-      selectNo(event){
-        this.$emit('getSelectNo',event.target.innerText)
-      },
-      nextPage(){
-        if(this.pageNo<this.totalPage){
-          this.$emit('getSelectNo',this.pageNo+1)
+      //计算出连续的页码的起始数字与结束数字[连续页码的数字:至少是5]
+      startNumAndEndNum(){
+        const {continues,pageNo,totalPage} = this
+        //先定义两个变量存储起始数字与结束数字
+        let start = 0,end = 0
+        //连续页码数字5【就是至少五页】:如果出现不正常的现象【就是不够五页】
+        //不正常现象【总页数没有连续页码多】
+        if(continues>totalPage){
+          start = 1
+          end = totalPage
+        }else{
+          //正常现象【连续的页码5，但是你的总页数一定是大于5的】
+          //起始数字
+          start = pageNo - parseInt(continues/2)
+          //结束数字
+          end = pageNo + parseInt(continues/2)
+          //把出现不正常的现象【start数字出现0|负数】纠正
+          if(start < 1){
+            start = 1
+            end = continues
+          }
+          //把出现不正常的现象【end数字大于总页码】纠正
+          if(end > totalPage){
+            end = totalPage;
+            start = totalPage - continues +1
+          }
         }
-      },
-      lastPage(){
-        if(this.pageNo>1){
-          this.$emit('getSelectNo',this.pageNo-1)
-        }
+        return {start,end}
       }
     },
   }
@@ -59,11 +59,10 @@
 
 <style lang="less" scoped>
   .pagination {
-    .select{
-      border: 1px red solid;
-    }
-
     text-align: center;
+    .active{
+      background-color: skyblue;
+    }
     button {
       margin: 0 5px;
       background-color: #f4f4f5;
