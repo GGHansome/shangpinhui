@@ -1,24 +1,6 @@
-# app
+# 尚品汇项目练习(42/100%)
 
-## Project setup
+## 原项目地址
 ```
-npm install
+http://82.156.11.187/
 ```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
