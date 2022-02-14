@@ -40,11 +40,11 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllCheck" @click="changeAllChecked">
+        <input class="chooseAll" type="checkbox" :checked="isAllCheck&&cartInfoList.length>0" @click="changeAllChecked">
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a @click="deleteAllCheckedCart">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -133,27 +133,24 @@
           alert(error.message)
         } 
       },
-      //pdwdop01d8
+      //删除选中的全部产品
+      async deleteAllCheckedCart(){
+        try {
+          await this.$store.dispatch('deleteAllCheckedCart')
+          this.getData()
+        } catch (error) {
+          alert(error.message)
+        }
+      },
       //修改全部产品的状态
-      changeAllChecked(){
-        if(this.isAllCheck){  
-          this.cartInfoList.forEach(async cart => {
-            try {
-              await this.$store.dispatch('changeCartCheckedByskuId',{skuId:cart.skuId,isChecked:0})
-              this.getData()
-            } catch (error) {
-              alert(error.message)
-            } 
-          });
-        }else{    
-          this.cartInfoList.forEach(async cart => {
-            try {
-              await this.$store.dispatch('changeCartCheckedByskuId',{skuId:cart.skuId,isChecked:1})
-              this.getData()
-            } catch (error) {
-              alert(error.message)
-            } 
-          });
+      async changeAllChecked(event){
+        try {
+          let isChecked = event.target.checked?'1':'0'
+          //派发action
+          await this.$store.dispatch('changeAllChecked',isChecked)
+          this.getData()
+        } catch (error) {
+          alert(error.message)
         }
       }
       
