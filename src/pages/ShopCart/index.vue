@@ -50,13 +50,13 @@
       </div>
       <div class="money-box">
         <div class="chosed">已选择
-          <span>0</span>件商品</div>
+          <span>{{selectShopNum}}</span>件商品</div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
           <i class="summoney">{{totalPrice}}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <a class="sum-btn" @click='$router.push("/trade")'>结算</a>
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@
           } catch (error) {
 
           }
-      },800),
+      },1000),
       //删除某一个产品的操作
       async deleteCartById(cart){
         try {
@@ -150,7 +150,7 @@
           await this.$store.dispatch('changeAllChecked',isChecked)
           this.getData()
         } catch (error) {
-          alert(error.message)
+          alert('购物车内没有商品!')
         }
       }
       
@@ -168,6 +168,10 @@
           totalPrice += cart.skuPrice*cart.skuNum
         });
         return totalPrice
+      },
+      //计算选中产品的数量
+      selectShopNum(){
+        return this.cartInfoList.reduce((pre,cartInfo)=>{return pre + (cartInfo.isChecked ? 1 : 0)},0)
       },
       //判读底部复选框是否勾选【全部产品都选中，才勾选】
       isAllCheck(){
