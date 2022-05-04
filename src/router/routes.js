@@ -1,15 +1,15 @@
 //引入路由组件
-// import Home from '@/pages/Home'
-import Search from '@/pages/Search'
-import Register from '@/pages/Register'
-import Login from '@/pages/Login'
-import Detail from '@/pages/Detail'
-import addCartSuccess from '@/pages/addCartSuccess'
-import shopCart from '@/pages/ShopCart'
-import Trade from '@/pages/Trade'
-import Pay from '@/pages/Pay'
-import PaySuccess from '@/pages/PaySuccess'
-import Center from '@/pages/Center'
+import Home from '@/pages/Home'
+// import Search from '@/pages/Search'
+// import Register from '@/pages/Register'
+// import Login from '@/pages/Login'
+// import Detail from '@/pages/Detail'
+// import addCartSuccess from '@/pages/addCartSuccess'
+// import shopCart from '@/pages/ShopCart'
+// import Trade from '@/pages/Trade'
+// import Pay from '@/pages/Pay'
+// import PaySuccess from '@/pages/PaySuccess'
+// import Center from '@/pages/Center'
 //引入二级路由组件
 import MyOrder from '@/pages/Center/myOrder'
 import GroupOrder from '@/pages/Center/groupOrder'
@@ -26,7 +26,7 @@ import GroupOrder from '@/pages/Center/groupOrder'
 export default [
   {
     path:'/Center',
-    component:Center,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/Center'),
     meta:{isShow:true},
     //二级路由组件
     children:[
@@ -47,13 +47,13 @@ export default [
   {
     name:'PaySuccess',
     path:'/PaySuccess',
-    component:PaySuccess,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/PaySuccess'),
     meta:{isShow:true},
   },
   {
     name:'Pay',
     path:'/Pay',
-    component:Pay,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/Pay'),
     meta:{isShow:true},
     beforeEnter: (to, from, next) => {
       // 去交易页面，必须是从购物车而来
@@ -68,7 +68,7 @@ export default [
   {
     name:'Trade',
     path:'/Trade',
-    component:Trade,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/Trade'),
     meta:{isShow:true},
     beforeEnter: (to, from, next) => {
       // 去交易页面，必须是从购物车而来
@@ -83,31 +83,31 @@ export default [
   {
     name:'shopCart',
     path:'/shopCart',
-    component:shopCart,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/ShopCart'),
     meta:{isShow:true},
   },
   {
     name:'addCartSuccess',
     path:'/addCartSuccess',
-    component:addCartSuccess,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/addCartSuccess'),
     meta:{isShow:true},
     // props:true
   },
   {
     path:'/detail/:skuid',
-    component:Detail,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/Detail'),
     meta:{isShow:true}
   },
 
   {
     path:'/home',
-    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/Home'),
+    component:Home,
     meta:{isShow:true}
   },
   {
     name:'search',
     path:'/Search/:keyword?',
-    component:Search,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/Search'),
     meta:{isShow:true},
     //路由组件能不能传递props数据？
     //布尔值写法:params
@@ -125,12 +125,12 @@ export default [
   },
   {
     path:'/register',
-    component:Register,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/Register'),
     meta:{isShow:false}
   },
   {
     path:'/login',
-    component:Login,
+    component:() => import(/* webpackChunkName: "group-lazy" */ '@/pages/Login'),
     meta:{isShow:false}
   },
   {

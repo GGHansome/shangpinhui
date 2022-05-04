@@ -112,7 +112,7 @@
           } catch (error) {
 
           }
-      },1000),
+      },500),
       //删除某一个产品的操作
       async deleteCartById(cart){
         try {

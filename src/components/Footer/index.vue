@@ -55,7 +55,7 @@
         </div>
         <div class="footerItem">
           <h4>帮助中心</h4>
-          <img src="./images/wx_cz.jpg" />
+          <img src="./images/gx_qrcode.jpg" />
         </div>
       </div>
       <div class="copyright">
@@ -98,8 +98,8 @@
           </li>
           <li>关于我们</li>
         </ul>
-        <p>地址：北京市昌平区宏福科技园综合楼6层</p>
-        <p>京ICP备19006430号</p>
+        <p>地址：江西省九江市浔阳区XXX号写字楼的楼顶</p>
+        <p>赣ICP备00000000号</p>
       </div>
     </div>
   </div>

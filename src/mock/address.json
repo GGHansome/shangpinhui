@@ -1,35 +1,35 @@
 [
   {
-    "consignee": "高旭",
-    "fullAddress": "江西省九江市浔阳区赵家花园社区3栋201室",
+    "consignee": "张三",
+    "fullAddress": "江西省XXX市XXX区XXXXX栋XXX室",
     "id": 1,
     "isDefault": "0",
     "phoneNum": "15779254938",
     "provinceId": 1,
     "regionId": 1,
-    "userAddress": "江西省九江市浔阳区赵家花园社区3栋201室",
+    "userAddress": "江西省XXX市XXX区XXXXX栋XXX室",
     "userId": 2
   },
   {
-    "consignee": "高旭",
-    "fullAddress": "江西省南昌市紫阳大道338号江西现代职业技术学院",
+    "consignee": "李四",
+    "fullAddress": "湖南省XXX市XXX区XXXXX栋XXX室",
     "id": 2,
     "isDefault": "0",
     "phoneNum": "15779254938",
     "provinceId": 1,
     "regionId": 1,
-    "userAddress": "江西省南昌市紫阳大道338号江西现代职业技术学院",
+    "userAddress": "湖南省XXX市XXX区XXXXX栋XXX室",
     "userId": 2
   },
   {
-    "consignee": "高旭",
-    "fullAddress": "江西省南昌市高新区紫阳大道115号江西科技学院",
+    "consignee": "王五",
+    "fullAddress": "浙江省XXX市XXX区XXXXX栋XXX室",
     "id": 3,
     "isDefault": "1",
     "phoneNum": "18679221521",
     "provinceId": 1,
     "regionId": 1,
-    "userAddress": "江西省南昌市高新区紫阳大道115号江西科技学院",
+    "userAddress": "浙江省XXX市XXX区XXXXX栋XXX室",
     "userId": 2
   }
   

@@ -81,7 +81,7 @@
 <script>
 import { mapState } from "vuex";
 //引包
-import Swiper from "swiper";
+// import Swiper from "swiper";
 export default {
   name: "ListContainer",
   mounted() {

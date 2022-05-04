@@ -27,7 +27,7 @@
           <a href="###">企业采购</a>
           <a href="###">关注尚品汇</a>
           <a href="###">合作招商</a>
-          <a href="###">商家后台</a>
+          <a href="http://124.222.187.74:81" target="_blank">商家后台</a>
         </div>
       </div>
     </div>
@@ -39,17 +39,16 @@
         </router-link>
       </h1>
       <div class="searchArea">
-        <form action="###" class="searchForm">
           <input
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
             v-model="keyWord"
+            @keydown.enter="goSearch"
           />
           <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
             搜索
           </button>
-        </form>
       </div>
     </div>
   </header>
@@ -89,11 +88,11 @@ export default {
       // this.$router.push({name:'search',params:{keyWord:''||undefined},query:{k:this.keyWord.toUpperCase()}})
 
       //面试题4:路由组件能不能传递props数据？
-      if(this.$route.query){
+      // if(this.$route.query){
         let loction = {name:'search',params:{keyword:this.keyWord||undefined}};
         loction.query = this.$route.query;
         this.$router.push(loction)
-      }
+      // }
     },
     clearKeyword(keyword){
       this.keyWord = keyword
@@ -185,9 +184,6 @@ export default {
       float: right;
       margin-top: 35px;
 
-      .searchForm {
-        overflow: hidden;
-
         input {
           box-sizing: border-box;
           width: 490px;
@@ -214,7 +210,7 @@ export default {
             outline: none;
           }
         }
-      }
+      
     }
   }
 }

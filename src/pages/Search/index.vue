@@ -54,18 +54,18 @@
                   </div>
                   <div class="price">
                     <strong>
-                      <em>¥</em>
+                      <em>¥ </em>
                       <i>{{good.price}}</i>
                     </strong>
                   </div>
                   <div class="attr">
-                    <a target="_blank" href="item.html" title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】">{{good.title}}</a>
+                    <a target="_blank" href="item.html" title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】" v-html="good.title"></a>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
                   </div>
                   <div class="operate">
-                    <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
+                    <a class="sui-btn btn-bordered btn-danger" @click="addShopCar(good)">加入购物车</a>
                     <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
                   </div>
                 </div>
@@ -126,10 +126,11 @@
       //在发请求之前带给服务器参数【searchParams参数发生变化有数值带给服务器】
       this.getData()
       this.$bus.$on('attrInfo',this.attrInfo)
+      console.log(this);
     },
     computed: {
       //mapGetters里面的写法:传递的数组，因为getters计算时没有划分模块【home，search】
-      ...mapGetters(['goodsList']),
+      ...mapGetters(['goodsList','skuInfo']),
       isOne(){
         return this.searchParams.order.indexOf('1')!=-1
       },
@@ -204,20 +205,38 @@
       //综合、价格排序的回调
       //点击的是综合
       allOrder(){
-        this.searchParams.order === '1:desc'?this.searchParams.order='1:asc':this.searchParams.order='1:desc'
+        this.searchParams.order=this.searchParams.order === '1:desc'?'1:asc':'1:desc'
         this.getData()
       },
       priceOrder(){
         if(this.searchParams.order.indexOf(1) != -1){
           this.searchParams.order = '2:asc'
         }
-        this.searchParams.order === '2:desc'?this.searchParams.order='2:asc':this.searchParams.order='2:desc'
+        this.searchParams.order=this.searchParams.order === '2:desc'?'2:asc':'2:desc'
         this.getData()
       },
       //获取子组件传递过来的页码进行数据请求
       getSelectNo(pageNo){
         this.searchParams.pageNo = pageNo*1
         this.getData()
+      },
+      //搜索界面直接将商品添加到购物车
+      async addShopCar(good){
+        //在我们跳转到添加购物车成功页面之前需要获取到商品的详细信息，因为购物车成功页面需要展示这些信息
+        this.$store.dispatch('getGoodInfo',good.id)
+        //1.发请求---将产品加入到数据库(通知服务器)
+        let result = this.$store.dispatch('addOrUpdateShopCart',{skuId:good.id,skuNum:1})
+        /* 当前这里派发一个action，也向服务器发请求，判断加入购物车是成功还是失败了，进行相应的操作 */
+        try {
+          if(await result == 200){
+            //1.进行路由跳转
+            //2.在路由跳转的时候还需要将产品的信息带给下一级的路由组件
+            sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo))
+            this.$router.push({name:'addCartSuccess',query:{skuNum:1}})
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
     //数据监听:监听数组实例身上的属性的属性值变化
@@ -380,8 +399,8 @@
                     color: #666;
 
                     img {
-                      max-width: 100%;
-                      height: auto;
+                      height: 215px;
+                      width: 215px;
                       vertical-align: middle;
                     }
                   }

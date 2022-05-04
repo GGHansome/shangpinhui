@@ -27,6 +27,9 @@ requests.interceptors.request.use((config)=>{
   if(store.state.detail.uuid_token){
     //请求头添加一个字段，和后台老师商量好了，不能瞎写
     config.headers.userTempId = store.state.detail.uuid_token;
+    config.headers['Cache-Control'] = 'public, max-age=300'
+    
+    // config.setHeader('Cache-Control', 'public, max-age=300');
   }
   //需要携带token带给服务器
   if(store.state.user.token){

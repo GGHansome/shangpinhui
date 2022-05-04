@@ -73,7 +73,7 @@
               <div class="controls">
                 <input autocomplete="off" class="itxt" v-model="number" @change="changeSkyNum">
                 <a href="javascript:" class="plus" @click="number++">+</a>
-                <a href="javascript:" class="mins" @click="number--<1?number=1:number">-</a>
+                <a href="javascript:" class="mins" @click="number--<=1?number=1:number">-</a>
               </div>
               <div class="add">
                 <!-- 以前咱们的路由跳转 从A路由跳转到B路由 这里加入购物车，进行路由跳转之前，发请求
@@ -377,8 +377,8 @@
             if(await result == 200){
               //1.进行路由跳转
               //2.在路由跳转的时候还需要将产品的信息带给下一级的路由组件
-              //一些简答的数据skuNum，通过query形式给路由组件传递过去
-              //产品信息的数据【比较复杂：skuInfo】，通过会话存储(不持久化，会话结束数据在小时)
+              //一些简单的数据skuNum，通过query形式给路由组件传递过去
+              //产品信息的数据【比较复杂：skuInfo】，通过会话存储(不持久化，会话结束数据在消失)
               //本地存储|会话存储，一般存储的是字符串
               sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo))
 

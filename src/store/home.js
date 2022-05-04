@@ -9,7 +9,7 @@ const state = {
 };
 const mutations ={
   CATEGORYLIST(state,categoryList){
-    state.categoryList = categoryList.slice(0,-2)
+    state.categoryList = categoryList.slice(0,15)
   },
   GETBANNERLIST(state,bannerList){
     state.bannerList = bannerList

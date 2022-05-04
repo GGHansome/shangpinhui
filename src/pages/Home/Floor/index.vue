@@ -68,7 +68,7 @@ export default {
   //第一次书写轮播图的时候，是在当前组件内部发请求、动态渲染结构【前台至少服务器数据需要回来】，因此当年的写法在这里不行
   //现在的这种写法为什么可以:因为请求是父组件发的，父组件通过props传递过来的，而且结构都已经有了的情况下执行mounted
   mounted() {
-    this.$store.dispatch('getFloorList')
+    // this.$store.dispatch('getFloorList')
     // var mySwiper = new Swiper(".swiper-container", {
     //   // direction: 'vertical', // 垂直切换选项
     //   loop: true, // 循环模式选项
